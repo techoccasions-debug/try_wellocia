@@ -114,7 +114,7 @@
 <p class="text-white mb-3">
                    Get a dedicated, elite recruitment asset backed by premium sourcing networks for a flat, predictable monthly subscription. Minimum 3-month engagement.
 </p>
-                <a href="#about" class="btn btn-primary py-md-3 px-md-5 me-3 rounded-pill">
+                <a href="#calculator" class="btn btn-primary py-md-3 px-md-5 me-3 rounded-pill">
                    Calculate my 90 day savings
                 </a>
             </div>
@@ -197,8 +197,92 @@
         </div>
         </div>
     </section>
-    <!-- ══════════════════════════════════════════════════════ -->
+    <!-- ══════════════════════════════════════════════════════ 
+     calculator
+        ══════════════════════════════════════════════════════ -->
+<section class="savings-calculator-section py-5" id="calculator">
 
+    <div class="container">
+
+        <div class="text-center mb-5">
+            <h2 class="calculator-title">Interactive Savings Calculator</h2>
+            <p class="calculator-subtitle">
+                Compare traditional recruitment costs with Wellocia's ₹25,000/month subscription model.
+            </p>
+        </div>
+
+        <div class="calculator-card">
+
+            <div class="calculator-left">
+
+                <div class="slider-group">
+                    <label>Hires Planned This Month</label>
+
+                    <div class="slider-value">
+                        <span id="hireCount">5</span>
+                    </div>
+
+                    <input type="range"
+                           min="1"
+                           max="20"
+                           value="5"
+                           id="hireSlider">
+                </div>
+
+                <div class="slider-group">
+                    <label>Average Annual Salary (CTC)</label>
+
+                    <div class="slider-value">
+                        ₹<span id="salaryValue">10</span>L
+                    </div>
+
+                    <input type="range"
+                           min="3"
+                           max="25"
+                           value="10"
+                           id="salarySlider">
+                </div>
+
+            </div>
+
+            <div class="calculator-right">
+
+                <div class="cost-grid">
+
+                    <div class="cost-box">
+                        <h6>Traditional Agency Cost</h6>
+                        <span id="agencyCost">₹4,16,500</span>
+                    </div>
+
+                    <div class="cost-box">
+                        <h6>Internal Team Cost</h6>
+                        <span id="internalCost">₹7,92,000</span>
+                    </div>
+
+                    <div class="cost-box featured">
+                        <h6>Wellocia Subscription</h6>
+                        <span>₹75,000</span>
+                    </div>
+
+                </div>
+
+                <div class="savings-box">
+                    <small>Your Total 90-Day Savings</small>
+
+                    <h3 id="savingAmount">₹3,41,500</h3>
+
+                    <a href="contact.html" class="btn btn-light rounded-pill">
+                        Lock In Your Savings
+                    </a>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
     <!-- Services -->
     <div class="container-fluid pt-6 px-5" id="services">
         <div class="text-center mx-auto mb-5" style="max-width: 600px;" data-aos="fade-up" data-aos-duration="900">
@@ -394,6 +478,48 @@
     <script src="lib/owlcarousel/owl.carousel.min.js"></script>
     <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
     <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+
+    <script>
+const hireSlider = document.getElementById("hireSlider");
+const salarySlider = document.getElementById("salarySlider");
+
+const hireCount = document.getElementById("hireCount");
+const salaryValue = document.getElementById("salaryValue");
+
+const agencyCost = document.getElementById("agencyCost");
+const savingAmount = document.getElementById("savingAmount");
+
+function formatINR(num) {
+    return "₹" + Math.round(num).toLocaleString("en-IN");
+}
+
+function calculate() {
+
+    const hires = parseInt(hireSlider.value);
+    const salaryLPA = parseInt(salarySlider.value);
+
+    hireCount.innerText = hires;
+    salaryValue.innerText = salaryLPA;
+
+    const annualSalary = salaryLPA * 100000;
+
+    // Traditional agency fee = 8.33% of CTC
+    const agency = hires * annualSalary * 0.0833;
+
+    // Wellocia = ₹25k/month x 3 months
+    const wellocia = 75000;
+
+    const savings = agency - wellocia;
+
+    agencyCost.innerText = formatINR(agency);
+    savingAmount.innerText = formatINR(savings > 0 ? savings : 0);
+}
+
+hireSlider.addEventListener("input", calculate);
+salarySlider.addEventListener("input", calculate);
+
+calculate();
+</script>
 
 
     <script src="js/main.js"></script>
